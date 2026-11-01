@@ -213,33 +213,10 @@ export default function App() {
 
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
 
-  // Instant Hydration Tracker: Eliminates visual flash of default images
-  const [isInitialHydrated, setIsInitialHydrated] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true;
-    try {
-      const savedConfig = localStorage.getItem('floatingdrapes_config');
-      if (savedConfig) {
-        const parsed = JSON.parse(savedConfig);
-        const hero = parsed?.heroImageUrl || '';
-        // If we already have stored custom images from prior visits, hydrate immediately
-        if (hero && !hero.includes('1618221195710-dd6b41faaea6') && !hero.includes('unsplash.com')) {
-          return true;
-        }
-      }
-    } catch (e) {}
-    // If no custom config is cached yet, hold loader until database fetch completes
-    return false;
-  });
-
   // Universal Supabase Initialization & Realtime Synchronizer
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
     let isMounted = true;
-
-    // Failsafe safety timeout: only unlocks if network completely stalls
-    const safetyTimer = setTimeout(() => {
-      if (isMounted) setIsInitialHydrated(true);
-    }, 6500);
 
     // 1. Initial Fast Universal Fetch from Supabase
     const syncSupabase = async () => {
@@ -340,10 +317,6 @@ export default function App() {
         }
       } catch (err) {
         console.warn('Initial Supabase fetch fallback to local storage:', err);
-      } finally {
-        if (isMounted) {
-          setIsInitialHydrated(true);
-        }
       }
     };
 
@@ -545,7 +518,6 @@ export default function App() {
 
     return () => {
       isMounted = false;
-      clearTimeout(safetyTimer);
       if (unsubscribe) unsubscribe();
     };
   }, []);
@@ -618,22 +590,6 @@ export default function App() {
   const filteredBlinds = selectedBlindFilter === 'All'
     ? blinds
     : blinds.filter(item => item.style === selectedBlindFilter);
-  // Zero-flash luxury guard: Ensures default Unsplash images never flash before user's actual Supabase images
-  if (!isInitialHydrated) {
-    return (
-      <div className="min-h-screen bg-[#021e3b] text-white flex flex-col items-center justify-center space-y-6 select-none p-6" id="floating-drapes-initial-loader">
-        <div className="h-16 w-16 relative flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border-2 border-[#0099ff]/20 animate-ping" />
-          <div className="h-14 w-14 rounded-full border-2 border-t-[#0099ff] border-r-transparent border-b-[#0099ff] border-l-transparent animate-spin" />
-          <span className="font-serif font-bold text-xl text-white">FD</span>
-        </div>
-        <div className="text-center space-y-1.5">
-          <h1 className="font-serif text-2xl tracking-[0.25em] uppercase font-bold text-white">Floating Drapes</h1>
-          <p className="text-[11px] text-[#0099ff] tracking-[0.2em] uppercase font-semibold">Bespoke Atelier • Curating Luxury Collections</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-luxury-bg text-white selection:bg-gold/30 flex flex-col justify-between" id="floatingdrapes-main-container">
