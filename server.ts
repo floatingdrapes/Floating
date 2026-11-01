@@ -51,6 +51,19 @@ export function createExpressApp() {
     next();
   });
 
+  // Explicit route for favicon.ico and site.webmanifest for search engines and browser address bars
+  app.get("/favicon.ico", (req, res) => {
+    res.setHeader("Content-Type", "image/x-icon");
+    res.setHeader("Cache-Control", "public, max-age=86400, stale-while-revalidate=604800");
+    res.sendFile(path.join(process.cwd(), "public", "favicon.ico"));
+  });
+
+  app.get("/site.webmanifest", (req, res) => {
+    res.setHeader("Content-Type", "application/manifest+json");
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.sendFile(path.join(process.cwd(), "public", "site.webmanifest"));
+  });
+
   // Use JSON & URLencoded middleware with generous 50mb limit for media/data payloads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));

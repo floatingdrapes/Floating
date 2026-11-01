@@ -522,29 +522,6 @@ export default function App() {
     };
   }, []);
 
-  // Dynamic brand favicon enforcement to ensure instant reflection and bust browser cache
-  useEffect(() => {
-    try {
-      const cacheBust = '?v=' + Date.now();
-      const iconUrls = [
-        { rel: 'icon', type: 'image/png', href: '/favicon-32x32.png' + cacheBust },
-        { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' + cacheBust },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' + cacheBust }
-      ];
-      iconUrls.forEach(({ rel, type, href }) => {
-        let link = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
-        if (!link) {
-          link = document.createElement('link');
-          link.rel = rel;
-          document.head.appendChild(link);
-        }
-        if (type) link.type = type;
-        link.href = href;
-      });
-    } catch (e) {
-      // ignore
-    }
-  }, []);
 
   // Keyboard shortcut listener for Ctrl + M / Cmd + M
   useEffect(() => {
