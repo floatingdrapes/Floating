@@ -5,11 +5,20 @@ Allow: /
 User-agent: Googlebot-Image
 Allow: /
 
-# Dedicated permissions for Generative Search Engines and AI Overviews
+# Dedicated permissions for Generative Search Engines and AI Overviews (GEO & AEO)
 User-agent: Google-Extended
 Allow: /
 
+User-agent: GoogleOther
+Allow: /
+
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
@@ -21,11 +30,18 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-User-agent: OAI-SearchBot
+User-agent: Applebot
 Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
 
-# Sitemap
+User-agent: Bingbot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# Sitemaps & AI Index Manifests
 Sitemap: https://floatingdrapes.com/sitemap.xml
+Sitemap: https://www.floatingdrapes.com/sitemap.xml

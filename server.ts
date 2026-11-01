@@ -64,6 +64,25 @@ export function createExpressApp() {
     res.sendFile(path.join(process.cwd(), "public", "site.webmanifest"));
   });
 
+  // Explicit routes for AI models (Gemini, ChatGPT, Perplexity, Copilot) & Search Engine Bots
+  app.get(["/llms.txt", "/llms-full.txt", "/.well-known/llms.txt"], (req, res) => {
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.sendFile(path.join(process.cwd(), "public", "llms.txt"));
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.sendFile(path.join(process.cwd(), "public", "robots.txt"));
+  });
+
+  app.get("/sitemap.xml", (req, res) => {
+    res.setHeader("Content-Type", "application/xml; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
+  });
+
   // Use JSON & URLencoded middleware with generous 50mb limit for media/data payloads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ extended: true, limit: "50mb" }));
