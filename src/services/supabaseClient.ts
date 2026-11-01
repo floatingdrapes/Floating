@@ -74,9 +74,30 @@ export function getSupabaseClient(): SupabaseClient | null {
 
 /**
  * Universally synchronizes Supabase credentials with the backend server so ANY device/browser
- * (laptops, mobile phones, tablets, incognito) connects to the exact same database.
+ * connects to the exact same database. If credentials already exist in env/localStorage,
+ * returns immediately without blocking UI rendering.
  */
 export async function initUniversalSupabase(): Promise<boolean> {
+  // If already configured synchronously via environment or persistent cache, return immediately
+  if (isSupabaseConfigured()) {
+    // Non-blocking background verification with backend
+    fetch('/api/supabase-config')
+      .then(res => res.json())
+      .then(data => {
+        if (data.url && data.key && data.url.startsWith('http')) {
+          const cleanUrl = data.url.trim();
+          const cleanKey = data.key.trim();
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(STORAGE_URL_KEY, cleanUrl);
+            localStorage.setItem(STORAGE_ANON_KEY, cleanKey);
+          }
+        }
+      })
+      .catch(() => {});
+    return true;
+  }
+
+  // Fallback for first-time devices without env variables
   try {
     const res = await fetch('/api/supabase-config');
     if (res.ok) {
@@ -464,6 +485,40 @@ export async function fetchUniversalSiteData(): Promise<{
     let inquiries: any[] | null = null;
     if (inquiriesRes.status === 'fulfilled' && inquiriesRes.value.data) {
       inquiries = inquiriesRes.value.data;
+    }
+
+    // Persist to local cache immediately to ensure 0ms instantaneous loading on subsequent visits
+    if (typeof window !== 'undefined') {
+      try {
+        if (siteConfig) localStorage.setItem('floatingdrapes_config', JSON.stringify(siteConfig));
+        if (curtains && curtains.length > 0) localStorage.setItem('floatingdrapes_curtains', JSON.stringify(curtains));
+        if (wallpapers && wallpapers.length > 0) localStorage.setItem('floatingdrapes_wallpapers', JSON.stringify(wallpapers));
+        if (blinds && blinds.length > 0) localStorage.setItem('floatingdrapes_blinds', JSON.stringify(blinds));
+        if (testimonials && testimonials.length > 0) localStorage.setItem('floatingdrapes_testimonials', JSON.stringify(testimonials));
+        if (transformations && transformations.length > 0) localStorage.setItem('floatingdrapes_transformations', JSON.stringify(transformations));
+        localStorage.setItem('floatingdrapes_has_synced_supabase', 'true');
+
+        // Preload key visual assets into browser cache to eliminate visual pops
+        const urlsToPreload = [
+          siteConfig?.heroImageUrl,
+          siteConfig?.categoryShowcase?.curtains?.thumbnail,
+          siteConfig?.categoryShowcase?.wallpapers?.thumbnail,
+          siteConfig?.categoryShowcase?.blinds?.thumbnail,
+          siteConfig?.customizationCurtainsImage,
+          siteConfig?.customizationWallpaperImage,
+          siteConfig?.whyChooseUsImageUrl,
+          ...(transformations || []).slice(0, 3).map(t => [t.beforeImage, t.afterImage]).flat()
+        ].filter(Boolean) as string[];
+
+        urlsToPreload.slice(0, 8).forEach(src => {
+          if (src && typeof src === 'string' && src.startsWith('http')) {
+            const preloader = new Image();
+            preloader.src = normalizeGoogleDriveUrl(src);
+          }
+        });
+      } catch (cacheErr) {
+        console.warn('LocalStorage cache write notice:', cacheErr);
+      }
     }
 
     return { siteConfig, curtains, wallpapers, blinds, testimonials, bookings, inquiries, uploadedImages, transformations };

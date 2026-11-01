@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Dedicated permissions for Generative Search Engines and AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://floatingdrapes.com/sitemap.xml

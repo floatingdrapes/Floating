@@ -115,13 +115,29 @@ export default function App() {
 
   // Dynamic Site Customizer Config & Database States
   const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
-    const saved = localStorage.getItem('floatingdrapes_config');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_config') : null;
+    const savedTransformations = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_transformations') : null;
+    let cachedPortfolio: PortfolioItem[] = [];
+    if (savedTransformations) {
+      try {
+        const parsedP = JSON.parse(savedTransformations);
+        if (Array.isArray(parsedP) && parsedP.length > 0) cachedPortfolio = parsedP;
+      } catch (e) {}
+    }
+
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+        const effectivePortfolio = cachedPortfolio.length > 0
+          ? cachedPortfolio
+          : (parsed.portfolioData && Array.isArray(parsed.portfolioData) && parsed.portfolioData.length > 0
+              ? parsed.portfolioData
+              : DEFAULT_SITE_CONFIG.portfolioData);
+
         return {
           ...DEFAULT_SITE_CONFIG,
           ...parsed,
+          portfolioData: effectivePortfolio,
           categoryShowcase: {
             curtains: {
               ...DEFAULT_SITE_CONFIG.categoryShowcase!.curtains,
@@ -141,11 +157,13 @@ export default function App() {
         console.error(e);
       }
     }
-    return DEFAULT_SITE_CONFIG;
+    return cachedPortfolio.length > 0
+      ? { ...DEFAULT_SITE_CONFIG, portfolioData: cachedPortfolio }
+      : DEFAULT_SITE_CONFIG;
   });
 
   const [curtains, setCurtains] = useState<CurtainItem[]>(() => {
-    const saved = localStorage.getItem('floatingdrapes_curtains');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_curtains') : null;
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -157,7 +175,7 @@ export default function App() {
   });
 
   const [wallpapers, setWallpapers] = useState<WallpaperItem[]>(() => {
-    const saved = localStorage.getItem('floatingdrapes_wallpapers');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_wallpapers') : null;
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -169,7 +187,7 @@ export default function App() {
   });
 
   const [blinds, setBlinds] = useState<BlindItem[]>(() => {
-    const saved = localStorage.getItem('floatingdrapes_blinds');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_blinds') : null;
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -181,7 +199,7 @@ export default function App() {
   });
 
   const [testimonials, setTestimonials] = useState<Testimonial[]>(() => {
-    const saved = localStorage.getItem('floatingdrapes_testimonials');
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('floatingdrapes_testimonials') : null;
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -194,70 +212,97 @@ export default function App() {
 
   const [adminPanelOpen, setAdminPanelOpen] = useState(false);
 
+  // Instant Hydration Tracker: Eliminates visual flash of default images
+  const [isInitialHydrated, setIsInitialHydrated] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    return Boolean(
+      localStorage.getItem('floatingdrapes_has_synced_supabase') ||
+      localStorage.getItem('floatingdrapes_config') ||
+      localStorage.getItem('floatingdrapes_transformations')
+    );
+  });
+
   // Universal Supabase Initialization & Realtime Synchronizer
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
+    let isMounted = true;
 
-    // 1. Initial Universal Fetch from Supabase (syncs with backend server so all devices connect)
-    initUniversalSupabase().then((configured) => {
-      if (configured) {
-        fetchUniversalSiteData()
-          .then((data) => {
-            if (data.siteConfig || (data.transformations && data.transformations.length > 0)) {
-              setSiteConfig(prev => {
-                const incomingPortfolio = (data.transformations && data.transformations.length > 0)
-                  ? data.transformations
-                  : (data.siteConfig?.portfolioData && data.siteConfig.portfolioData.length > 0
-                      ? data.siteConfig.portfolioData
-                      : prev.portfolioData);
+    // Safety timeout ensures page always reveals even on sluggish connections
+    const safetyTimer = setTimeout(() => {
+      if (isMounted) setIsInitialHydrated(true);
+    }, 1200);
 
-                const merged: SiteConfig = {
-                  ...DEFAULT_SITE_CONFIG,
-                  ...prev,
-                  ...(data.siteConfig || {}),
-                  portfolioData: incomingPortfolio,
-                  categoryShowcase: {
-                    curtains: {
-                      ...DEFAULT_SITE_CONFIG.categoryShowcase!.curtains,
-                      ...(prev.categoryShowcase?.curtains || {}),
-                      ...(data.siteConfig?.categoryShowcase?.curtains || {})
-                    },
-                    wallpapers: {
-                      ...DEFAULT_SITE_CONFIG.categoryShowcase!.wallpapers,
-                      ...(prev.categoryShowcase?.wallpapers || {}),
-                      ...(data.siteConfig?.categoryShowcase?.wallpapers || {})
-                    },
-                    blinds: {
-                      ...DEFAULT_SITE_CONFIG.categoryShowcase!.blinds,
-                      ...(prev.categoryShowcase?.blinds || {}),
-                      ...(data.siteConfig?.categoryShowcase?.blinds || {})
-                    }
+    // 1. Initial Fast Universal Fetch from Supabase
+    const syncSupabase = async () => {
+      try {
+        const configured = await initUniversalSupabase();
+        if (configured && isMounted) {
+          const data = await fetchUniversalSiteData();
+          if (!isMounted) return;
+
+          if (data.siteConfig || (data.transformations && data.transformations.length > 0)) {
+            setSiteConfig(prev => {
+              const incomingPortfolio = (data.transformations && data.transformations.length > 0)
+                ? data.transformations
+                : (data.siteConfig?.portfolioData && data.siteConfig.portfolioData.length > 0
+                    ? data.siteConfig.portfolioData
+                    : prev.portfolioData);
+
+              const merged: SiteConfig = {
+                ...DEFAULT_SITE_CONFIG,
+                ...prev,
+                ...(data.siteConfig || {}),
+                portfolioData: incomingPortfolio,
+                categoryShowcase: {
+                  curtains: {
+                    ...DEFAULT_SITE_CONFIG.categoryShowcase!.curtains,
+                    ...(prev.categoryShowcase?.curtains || {}),
+                    ...(data.siteConfig?.categoryShowcase?.curtains || {})
+                  },
+                  wallpapers: {
+                    ...DEFAULT_SITE_CONFIG.categoryShowcase!.wallpapers,
+                    ...(prev.categoryShowcase?.wallpapers || {}),
+                    ...(data.siteConfig?.categoryShowcase?.wallpapers || {})
+                  },
+                  blinds: {
+                    ...DEFAULT_SITE_CONFIG.categoryShowcase!.blinds,
+                    ...(prev.categoryShowcase?.blinds || {}),
+                    ...(data.siteConfig?.categoryShowcase?.blinds || {})
                   }
-                };
-                localStorage.setItem('floatingdrapes_config', JSON.stringify(merged));
-                return merged;
-              });
-            }
-            if (data.curtains && data.curtains.length > 0) {
-              setCurtains(data.curtains);
-              localStorage.setItem('floatingdrapes_curtains', JSON.stringify(data.curtains));
-            }
-            if (data.wallpapers && data.wallpapers.length > 0) {
-              setWallpapers(data.wallpapers);
-              localStorage.setItem('floatingdrapes_wallpapers', JSON.stringify(data.wallpapers));
-            }
-            if (data.blinds && data.blinds.length > 0) {
-              setBlinds(data.blinds);
-              localStorage.setItem('floatingdrapes_blinds', JSON.stringify(data.blinds));
-            }
-            if (data.testimonials && data.testimonials.length > 0) {
-              setTestimonials(data.testimonials);
-              localStorage.setItem('floatingdrapes_testimonials', JSON.stringify(data.testimonials));
-            }
-          })
-          .catch((err) => {
-            console.warn('Initial Supabase fetch fallback to local storage:', err);
-          });
+                }
+              };
+              localStorage.setItem('floatingdrapes_config', JSON.stringify(merged));
+              return merged;
+            });
+          }
+
+          if (data.curtains && data.curtains.length > 0) {
+            setCurtains(data.curtains);
+            localStorage.setItem('floatingdrapes_curtains', JSON.stringify(data.curtains));
+          }
+          if (data.wallpapers && data.wallpapers.length > 0) {
+            setWallpapers(data.wallpapers);
+            localStorage.setItem('floatingdrapes_wallpapers', JSON.stringify(data.wallpapers));
+          }
+          if (data.blinds && data.blinds.length > 0) {
+            setBlinds(data.blinds);
+            localStorage.setItem('floatingdrapes_blinds', JSON.stringify(data.blinds));
+          }
+          if (data.testimonials && data.testimonials.length > 0) {
+            setTestimonials(data.testimonials);
+            localStorage.setItem('floatingdrapes_testimonials', JSON.stringify(data.testimonials));
+          }
+        }
+      } catch (err) {
+        console.warn('Initial Supabase fetch fallback to local storage:', err);
+      } finally {
+        if (isMounted) {
+          setIsInitialHydrated(true);
+        }
+      }
+    };
+
+    syncSupabase();
 
         // 2. Subscribe to universal realtime changes across all tables
         unsubscribe = subscribeToUniversalChanges((table: string, payload: any) => {
@@ -452,10 +497,10 @@ export default function App() {
             }
           }
         });
-      }
-    });
 
     return () => {
+      isMounted = false;
+      clearTimeout(safetyTimer);
       if (unsubscribe) unsubscribe();
     };
   }, []);
@@ -504,6 +549,22 @@ export default function App() {
   const filteredBlinds = selectedBlindFilter === 'All'
     ? blinds
     : blinds.filter(item => item.style === selectedBlindFilter);
+  // Zero-flash luxury guard: Ensures default Unsplash images never flash before user's actual Supabase images
+  if (!isInitialHydrated) {
+    return (
+      <div className="min-h-screen bg-[#021e3b] text-white flex flex-col items-center justify-center space-y-6 select-none p-6" id="floating-drapes-initial-loader">
+        <div className="h-16 w-16 relative flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-2 border-[#0099ff]/20 animate-ping" />
+          <div className="h-14 w-14 rounded-full border-2 border-t-[#0099ff] border-r-transparent border-b-[#0099ff] border-l-transparent animate-spin" />
+          <span className="font-serif font-bold text-xl text-white">FD</span>
+        </div>
+        <div className="text-center space-y-1.5">
+          <h1 className="font-serif text-2xl tracking-[0.25em] uppercase font-bold text-white">Floating Drapes</h1>
+          <p className="text-[11px] text-[#0099ff] tracking-[0.2em] uppercase font-semibold">Bespoke Atelier • Curating Luxury Collections</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-luxury-bg text-white selection:bg-gold/30 flex flex-col justify-between" id="floatingdrapes-main-container">
