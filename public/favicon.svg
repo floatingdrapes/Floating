@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <clipPath id="squircle">
+      <rect width="512" height="512" rx="108" ry="108" />
+    </clipPath>
+    <linearGradient id="softGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Rounded Container with Brand Colors -->
+  <g clip-path="url(#squircle)">
+    <!-- Left Half: Floating Drapes Deep Navy Blue -->
+    <rect x="0" y="0" width="265" height="512" fill="#062648" />
+    <!-- Right Half: Floating Drapes Vibrant Sky Blue -->
+    <rect x="265" y="0" width="247" height="512" fill="#029BFA" />
+
+    <!-- Subtle vertical drapery folds reflection -->
+    <path d="M60 0 Q95 256 60 512 Z" fill="#ffffff" opacity="0.04" />
+    <path d="M190 0 Q225 256 190 512 Z" fill="#000000" opacity="0.12" />
+    <path d="M330 0 Q365 256 330 512 Z" fill="#ffffff" opacity="0.08" />
+    <path d="M440 0 Q475 256 440 512 Z" fill="#000000" opacity="0.08" />
+
+    <!-- Subtle diagonal gloss -->
+    <rect width="512" height="512" fill="url(#softGleam)" pointer-events="none" />
+
+    <!-- Letter 'F' on the Navy side -->
+    <text x="160" y="278" fill="#FFFFFF" font-family="'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif" font-weight="900" font-size="240" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.03em">F</text>
+
+    <!-- Letter 'D' on the Sky Blue side -->
+    <text x="368" y="278" fill="#FFFFFF" font-family="'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif" font-weight="900" font-size="240" text-anchor="middle" dominant-baseline="central" letter-spacing="-0.03em">D</text>
+
+    <!-- Small decorative luxury sparkle above split line -->
+    <circle cx="265" cy="110" r="10" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="265" cy="402" r="10" fill="#FFFFFF" opacity="0.9" />
+  </g>
+</svg>
