@@ -5,10 +5,9 @@ interface FooterProps {
   setActivePage: (page: string) => void;
   openBookingModal: () => void;
   brandLogoUrl?: string;
-  openAdminPanel?: () => void;
 }
 
-export default function Footer({ setActivePage, openBookingModal, brandLogoUrl = '/logo.svg', openAdminPanel }: FooterProps) {
+export default function Footer({ setActivePage, openBookingModal, brandLogoUrl = '/logo.svg' }: FooterProps) {
   
   const handlePageClick = (pageId: string, targetId?: string) => {
     setActivePage('home');
@@ -199,16 +198,6 @@ export default function Footer({ setActivePage, openBookingModal, brandLogoUrl =
           <div className="flex items-center space-x-6 mt-4 sm:mt-0 font-medium">
             <a href="#privacy" className="hover:text-[#029BFA] transition-colors">Privacy Policy</a>
             <a href="#terms" className="hover:text-[#029BFA] transition-colors">Terms & Conditions</a>
-            {openAdminPanel && (
-              <button
-                type="button"
-                onClick={openAdminPanel}
-                className="hover:text-[#029BFA] text-zinc-400 transition-colors flex items-center space-x-1 cursor-pointer"
-                title="Admin Control Panel (or press Ctrl + M)"
-              >
-                <span>Admin Portal</span>
-              </button>
-            )}
           </div>
         </div>
 

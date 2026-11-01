@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Dedicated permission for Google Search Favicon Crawler
+User-agent: Googlebot-Image
+Allow: /
+
 # Dedicated permissions for Generative Search Engines and AI Overviews
 User-agent: Google-Extended
 Allow: /

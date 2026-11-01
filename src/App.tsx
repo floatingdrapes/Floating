@@ -1361,7 +1361,6 @@ export default function App() {
         setActivePage={setActivePage} 
         openBookingModal={() => setBookingModalOpen(true)} 
         brandLogoUrl={siteConfig.brandLogoUrl}
-        openAdminPanel={() => setAdminPanelOpen(true)}
       />
 
       {/* THEME STYLE DYNAMIC INJECTOR */}
