@@ -44,6 +44,7 @@ import {
   fetchUniversalSiteData,
   subscribeToUniversalChanges
 } from './services/supabaseClient';
+import { normalizeGoogleDriveUrl } from './utils/googleDrive';
 
 import { 
   Sparkles, 
@@ -215,11 +216,19 @@ export default function App() {
   // Instant Hydration Tracker: Eliminates visual flash of default images
   const [isInitialHydrated, setIsInitialHydrated] = useState<boolean>(() => {
     if (typeof window === 'undefined') return true;
-    return Boolean(
-      localStorage.getItem('floatingdrapes_has_synced_supabase') ||
-      localStorage.getItem('floatingdrapes_config') ||
-      localStorage.getItem('floatingdrapes_transformations')
-    );
+    try {
+      const savedConfig = localStorage.getItem('floatingdrapes_config');
+      if (savedConfig) {
+        const parsed = JSON.parse(savedConfig);
+        const hero = parsed?.heroImageUrl || '';
+        // If we already have stored custom images from prior visits, hydrate immediately
+        if (hero && !hero.includes('1618221195710-dd6b41faaea6') && !hero.includes('unsplash.com')) {
+          return true;
+        }
+      }
+    } catch (e) {}
+    // If no custom config is cached yet, hold loader until database fetch completes
+    return false;
   });
 
   // Universal Supabase Initialization & Realtime Synchronizer
@@ -227,10 +236,10 @@ export default function App() {
     let unsubscribe: (() => void) | undefined;
     let isMounted = true;
 
-    // Safety timeout ensures page always reveals even on sluggish connections
+    // Failsafe safety timeout: only unlocks if network completely stalls
     const safetyTimer = setTimeout(() => {
       if (isMounted) setIsInitialHydrated(true);
-    }, 1200);
+    }, 6500);
 
     // 1. Initial Fast Universal Fetch from Supabase
     const syncSupabase = async () => {
@@ -240,6 +249,7 @@ export default function App() {
           const data = await fetchUniversalSiteData();
           if (!isMounted) return;
 
+          let mergedConfig: SiteConfig | null = null;
           if (data.siteConfig || (data.transformations && data.transformations.length > 0)) {
             setSiteConfig(prev => {
               const incomingPortfolio = (data.transformations && data.transformations.length > 0)
@@ -271,6 +281,7 @@ export default function App() {
                   }
                 }
               };
+              mergedConfig = merged;
               localStorage.setItem('floatingdrapes_config', JSON.stringify(merged));
               return merged;
             });
@@ -291,6 +302,40 @@ export default function App() {
           if (data.testimonials && data.testimonials.length > 0) {
             setTestimonials(data.testimonials);
             localStorage.setItem('floatingdrapes_testimonials', JSON.stringify(data.testimonials));
+          }
+
+          // Preload priority images for Page 1 & Page 2 directly into browser cache
+          const priorityUrls: string[] = [];
+          const activeCfg: SiteConfig = mergedConfig || (data.siteConfig as SiteConfig);
+          if (activeCfg) {
+            if (activeCfg.heroImageUrl) priorityUrls.push(activeCfg.heroImageUrl);
+            if (activeCfg.whyChooseUsImageUrl) priorityUrls.push(activeCfg.whyChooseUsImageUrl);
+            if (activeCfg.customizationCurtainsImage) priorityUrls.push(activeCfg.customizationCurtainsImage);
+            if (activeCfg.customizationWallpaperImage) priorityUrls.push(activeCfg.customizationWallpaperImage);
+            if (activeCfg.categoryShowcase?.curtains?.thumbnail) priorityUrls.push(activeCfg.categoryShowcase.curtains.thumbnail);
+            if (activeCfg.categoryShowcase?.wallpapers?.thumbnail) priorityUrls.push(activeCfg.categoryShowcase.wallpapers.thumbnail);
+            if (activeCfg.categoryShowcase?.blinds?.thumbnail) priorityUrls.push(activeCfg.categoryShowcase.blinds.thumbnail);
+            if (activeCfg.portfolioData && activeCfg.portfolioData.length > 0) {
+              activeCfg.portfolioData.slice(0, 4).forEach(p => {
+                if (p.beforeImage) priorityUrls.push(p.beforeImage);
+                if (p.afterImage) priorityUrls.push(p.afterImage);
+              });
+            }
+          }
+
+          if (priorityUrls.length > 0) {
+            await Promise.allSettled(
+              priorityUrls.map(url => {
+                return new Promise<void>((resolve) => {
+                  if (!url || typeof url !== 'string') return resolve();
+                  const img = new Image();
+                  img.onload = () => resolve();
+                  img.onerror = () => resolve();
+                  img.src = normalizeGoogleDriveUrl(url);
+                  setTimeout(resolve, 1800);
+                });
+              })
+            );
           }
         }
       } catch (err) {

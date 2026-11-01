@@ -182,6 +182,7 @@ export default function AdminPanel({
   const [isSeedingDatabase, setIsSeedingDatabase] = useState(false);
   const [isPullingData, setIsPullingData] = useState(false);
   const [sqlCopied, setSqlCopied] = useState(false);
+  const [imagesConfigCopied, setImagesConfigCopied] = useState(false);
 
   // Reset inactivity timer on user actions
   const resetInactivityTimer = () => {
@@ -1344,6 +1345,29 @@ export default function AdminPanel({
     navigator.clipboard.writeText(SUPABASE_SQL_SCHEMA);
     setSqlCopied(true);
     setTimeout(() => setSqlCopied(false), 3000);
+  };
+
+  const handleCopyRawImagesConfig = () => {
+    const rawImageExport = {
+      heroImageUrl: siteConfig.heroImageUrl || '',
+      whyChooseUsImageUrl: siteConfig.whyChooseUsImageUrl || '',
+      customizationCurtainsImage: siteConfig.customizationCurtainsImage || '',
+      customizationWallpaperImage: siteConfig.customizationWallpaperImage || '',
+      showcaseCurtainsThumbnail: siteConfig.categoryShowcase?.curtains?.thumbnail || '',
+      showcaseWallpapersThumbnail: siteConfig.categoryShowcase?.wallpapers?.thumbnail || '',
+      showcaseBlindsThumbnail: siteConfig.categoryShowcase?.blinds?.thumbnail || '',
+      transformations: (siteConfig.portfolioData || []).map(p => ({
+        id: p.id,
+        category: p.category,
+        title: p.title,
+        description: p.description,
+        beforeImage: p.beforeImage,
+        afterImage: p.afterImage
+      }))
+    };
+    navigator.clipboard.writeText(JSON.stringify(rawImageExport, null, 2));
+    setImagesConfigCopied(true);
+    setTimeout(() => setImagesConfigCopied(false), 3500);
   };
 
   const handleLoadMedia = async () => {
@@ -5086,6 +5110,26 @@ export default function AdminPanel({
                         <span>{isPullingData ? 'PULLING FROM SUPABASE...' : 'REFRESH & SYNC FROM SUPABASE'}</span>
                       </button>
                     </div>
+                  </div>
+
+                  {/* Export Active Images for Raw Code Card */}
+                  <div className="bg-white border border-[#c5def2] rounded-xl p-6 space-y-4 shadow-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex items-center space-x-2 text-[#0099ff]">
+                        <Layers className="h-4 w-4" />
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-[#002b49]">Export Active Images for Raw Code</h4>
+                      </div>
+                      <button
+                        onClick={handleCopyRawImagesConfig}
+                        className="bg-[#002b49] hover:bg-[#003960] text-white px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg shadow-md transition-all flex items-center space-x-2 cursor-pointer w-fit"
+                      >
+                        {imagesConfigCopied ? <CheckCheck className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                        <span>{imagesConfigCopied ? 'IMAGE CONFIG COPIED!' : 'COPY IMAGE CONFIG JSON'}</span>
+                      </button>
+                    </div>
+                    <p className="text-xs text-[#335577] leading-relaxed">
+                      Copies all current Page 1 &amp; Page 2 image URLs (Hero, Curtains/Wallpapers/Blinds Showcase, Customization, Why Choose Us, and Transformations) to your clipboard. You can paste this in chat anytime to bake your images permanently into the source code!
+                    </p>
                   </div>
 
                   {/* SQL Schema Generator Card */}
