@@ -11,6 +11,46 @@ export interface BlindItem {
 
 export const EXTENDED_CURTAINS_DATA: CurtainItem[] = [
   {
+    id: 'c-db-1',
+    name: 'Blue & Gold Floral Jacquard Curtain',
+    description: 'Featuring raised blue and gold florals, this Premium Tier jacquard curtain offers a heavy, beautifully structured drape.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/curtains/1792732444624_Luxurious_Floral_Jacquard_Curtain_Detail.png',
+    priceClass: 'Premium',
+    materials: ['Woven Jacquard', 'Polyester Blend', 'Metallic Threads']
+  },
+  {
+    id: 'c-db-2',
+    name: 'Ivory & Sage Ginkgo Jacquard Curtain',
+    description: 'This Premium Tier curtain features raised sage green and gold ginkgo leaf motifs, offering a heavy, elegant drape.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/curtains/1792732637143_Ivory_Sage_Botanical_Jacquard_Curtains.png',
+    priceClass: 'Premium',
+    materials: ['Woven Jacquard', 'Polyester Blend', 'Metallic Threads']
+  },
+  {
+    id: 'c-db-3',
+    name: 'Cream & Slate Floral Jacquard Curtain',
+    description: 'This Premium Tier curtain features raised slate grey and gold floral motifs, offering a heavy, elegant drape.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/curtains/1792732841338_Luxurious_Embroidered_Floral_Curtain_Showcase.png',
+    priceClass: 'Premium',
+    materials: ['Woven Jacquard', 'Polyester Blend', 'Metallic Threads']
+  },
+  {
+    id: 'c-db-4',
+    name: 'Taupe & Gold Wave Jacquard Curtain',
+    description: 'Featuring a textured taupe and gold wave pattern, this Premium Tier curtain provides a heavy, structured drape for a modern luxury aesthetic.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/curtains/1792733939118_Luxurious_Textured_Fabric_Showcase.png',
+    priceClass: 'Premium',
+    materials: ['Woven Jacquard', 'Polyester Blend', 'Metallic Threads']
+  },
+  {
+    id: 'c-db-5',
+    name: 'Sage & Gold Botanical Jacquard Curtain',
+    description: 'This Premium Tier curtain features raised sage green and gold botanical motifs, offering a heavy, elegant drape.',
+    image: 'https://i.postimg.cc/jdcR8nGR/1792734223370-Luxury-Botanical-Embroidered-Curtain-Showcase.jpg',
+    priceClass: 'Premium',
+    materials: ['Woven Jacquard', 'Polyester Blend', 'Metallic Threads']
+  },
+  {
     id: 'c1',
     name: 'Royal Velvet Pleats',
     description: 'Double-pleated French velvet drapes offering supreme sound isolation and an unparalleled heavy drape aesthetic.',
@@ -174,6 +214,46 @@ export const EXTENDED_CURTAINS_DATA: CurtainItem[] = [
 
 export const EXTENDED_WALLPAPERS_DATA: WallpaperItem[] = [
   {
+    id: 'w-db-1',
+    name: 'Teal & Gold Embossed Leaf Wallpaper - Botanical Style',
+    description: 'Deeply embossed teal and gold leaves create a striking 3D textured botanical feature wall.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/wallpapers/1792826745566_Luxurious_Teal_and_Gold_Botanical_Wallpaper_Interior.png',
+    style: 'Botanical',
+    materials: ['Heavyweight Vinyl', 'Non-Woven Backing', 'Metallic Accents']
+  },
+  {
+    id: 'w-db-2',
+    name: 'Blue & Gold Ginkgo Embossed Wallpaper',
+    description: 'Deeply embossed blue and gold ginkgo leaves create a luxurious 3D textured botanical feature wall.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/wallpapers/1792827390193_Luxury_Botanical_Mural_Living_Room.png',
+    style: 'Botanical',
+    materials: ['Heavyweight Vinyl', 'Non-Woven Backing', 'Metallic Accents']
+  },
+  {
+    id: 'w-db-3',
+    name: 'Green & Gold Embossed Wallpaper',
+    description: 'Deeply embossed green and gold leaves create a stunning 3D textured botanical feature wall.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/wallpapers/1792827612126_Luxury_Botanical_Wallpaper_Showcase.png',
+    style: 'Botanical',
+    materials: ['Heavyweight Vinyl', 'Non-Woven Backing', 'Metallic Accents']
+  },
+  {
+    id: 'w-db-4',
+    name: 'Rust & Grey Geometric Wallpaper - Modern Style',
+    description: 'Deeply textured rust and grey geometric arches with gold accents create a bold and striking modern feature wall.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/wallpapers/1792827880550_Geometric_Gold_and_Amber_Feature_Wall.png',
+    style: 'Modern',
+    materials: ['Heavyweight Vinyl', 'Non-Woven Backing', 'Metallic Accents']
+  },
+  {
+    id: 'w-db-5',
+    name: 'Geometric Gold & Charcoal 3D Wallpaper',
+    description: 'Striking geometric 3D triangles in charcoal and metallic gold create a bold, modern statement wall with rich depth.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/wallpapers/1792828309311_Luxury_Geometric_Feature_Wall_Living_Room.png',
+    style: 'Modern',
+    materials: ['Heavyweight Vinyl', 'Non-Woven Backing', 'Metallic Accents']
+  },
+  {
     id: 'w1',
     name: 'Imperial Damascus Brocade',
     description: 'Embossed fabric wallpaper featuring classical Victorian patterns with a tactile matte finish and golden undertones.',
@@ -336,6 +416,46 @@ export const EXTENDED_WALLPAPERS_DATA: WallpaperItem[] = [
 ];
 
 export const EXTENDED_BLINDS_DATA: BlindItem[] = [
+  {
+    id: 'b-db-1',
+    name: 'Taupe Textured Roman Blind - Reserve Tier',
+    description: 'This Reserve Tier linen-textured Roman blind delivers understated elegance and filtered light.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/blinds/1792828838053_Luxury_Roman_Blind_Living_Room_Showcase.png',
+    style: 'Roman',
+    materials: ['Woven Linen-Textured Polyester Blend']
+  },
+  {
+    id: 'b-db-2',
+    name: 'Havana Taupe Venetian Blind - Reserve Tier',
+    description: 'This Reserve Tier wooden Venetian blind features sleek taupe slats, delivering refined light control and modern sophistication.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/blinds/1792829169936_Luxury_Venetian_Blinds_in_a_Sunlit_Interior.png',
+    style: 'Venetian',
+    materials: ['Faux Wood', 'PVC Composite Slats', 'Coordinating Valance']
+  },
+  {
+    id: 'b-db-3',
+    name: 'Sanctuary Taupe Roller Blind - Reserve Tier',
+    description: 'This Reserve Tier linen-textured roller blind delivers understated elegance and filtered light.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/blinds/1792828873953_Warm_Modern_Roller_Shade_Living_Room.png',
+    style: 'Roller',
+    materials: ['Eco-Friendly Bamboo Composite', 'UV-Resistant Polyester Weave']
+  },
+  {
+    id: 'b-db-4',
+    name: 'Aura Taupe Zebra Blind - Reserve Tier',
+    description: 'This Reserve Tier zebra blind delivers versatile light control and modern elegance.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/blinds/1792830381316_Golden-Hour_Zebra_Blind_Living_Room.png',
+    style: 'Zebra',
+    materials: ['Dual-Layer Sheer Mesh', 'Woven Polyester Stripes', 'Enclosed Aluminum Cassette']
+  },
+  {
+    id: 'b-db-5',
+    name: 'Sanctuary Motorized Roller Blind - Reserve Tier',
+    description: 'This Reserve Tier motorized roller blind delivers effortless remote operation and filtered light.',
+    image: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/blinds/1792830195122_Smart_Roller_Blinds_at_Sunset.png',
+    style: 'Motorized',
+    materials: ['Motorized Aluminum Cassette', 'Quiet Tubular Motor', 'Light-Filtering Fiberglass Yarn']
+  },
   {
     id: 'b1',
     name: 'Signature Bamboo Roman',

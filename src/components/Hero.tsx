@@ -94,7 +94,7 @@ export default function Hero({ onExplore, openBookingModal, siteConfig }: HeroPr
             {/* Main Luxury Living room with beautiful blue curtains */}
             <div className="relative w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] overflow-hidden rounded-[24px] shadow-[0_20px_50px_rgba(2,30,59,0.15)] border border-zinc-100">
               <OptimizedImage
-                src={siteConfig.heroImageUrl || DEFAULT_SITE_CONFIG.heroImageUrl || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"}
+                src={siteConfig.heroImageUrl || DEFAULT_SITE_CONFIG.heroImageUrl || "https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/hero/1792157865648_Sunlit_Modern_Living_Room_Retreat.png"}
                 alt="Luxury living room styling with elite custom drapes"
                 priority={true}
                 width={1200}

@@ -12,12 +12,12 @@ export default function CustomizationSection({ openBookingModal, siteConfig }: C
   const curtainsImg = normalizeGoogleDriveUrl(
     siteConfig?.customizationCurtainsImage 
     || DEFAULT_SITE_CONFIG.customizationCurtainsImage 
-    || 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=600&q=80'
+    || 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/curtains/1792151517592_Modern_Luxury_Living_Room_with_Draped_Curtains.png'
   );
   const wallpaperImg = normalizeGoogleDriveUrl(
     siteConfig?.customizationWallpaperImage 
     || DEFAULT_SITE_CONFIG.customizationWallpaperImage 
-    || 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=600&q=80'
+    || 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/wallpapers/1792151416732_Luxurious_Botanical_Wallpaper_Living_Room.png'
   );
   
   const sectionTitle = siteConfig?.customizationSectionTitle || DEFAULT_SITE_CONFIG.customizationSectionTitle || 'Tailor-Made Customization';

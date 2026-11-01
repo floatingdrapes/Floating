@@ -25,10 +25,22 @@ export function getSupabaseCredentials(): { url: string; key: string; isFromEnv:
   const storedUrl = (typeof window !== 'undefined' ? localStorage.getItem(STORAGE_URL_KEY) || '' : '').trim();
   const storedKey = (typeof window !== 'undefined' ? localStorage.getItem(STORAGE_ANON_KEY) || '' : '').trim();
 
+  if (storedUrl && storedKey) {
+    return {
+      url: storedUrl,
+      key: storedKey,
+      isFromEnv: false
+    };
+  }
+
+  // Built-in verified project credentials
+  const defaultUrl = 'https://vgcftgxtpywmswxvztsm.supabase.co';
+  const defaultKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnY2Z0Z3h0cHl3bXN3eHZ6dHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MTQxODAsImV4cCI6MjEwNTI5MDE4MH0.z0Ur4dFmbiDX9YY2rvnm7jqmgT6eU_7sd2Oqxxonq9k';
+
   return {
-    url: storedUrl,
-    key: storedKey,
-    isFromEnv: false
+    url: defaultUrl,
+    key: defaultKey,
+    isFromEnv: true
   };
 }
 

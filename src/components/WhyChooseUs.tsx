@@ -11,7 +11,7 @@ export default function WhyChooseUs({ siteConfig }: WhyChooseUsProps) {
   const whyChooseUsImg = normalizeGoogleDriveUrl(
     siteConfig?.whyChooseUsImageUrl 
     || DEFAULT_SITE_CONFIG.whyChooseUsImageUrl 
-    || "https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=800&q=80"
+    || "https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/why_choose_us/1792151814330_Luxury_Drapery_Showroom_in_Sunlight.png"
   );
   const title = siteConfig?.whyChooseUsTitle || DEFAULT_SITE_CONFIG.whyChooseUsTitle;
   const subtitle = siteConfig?.whyChooseUsSubtitle || DEFAULT_SITE_CONFIG.whyChooseUsSubtitle;

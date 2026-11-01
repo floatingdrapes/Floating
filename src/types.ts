@@ -198,48 +198,24 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     category: 'Living Room',
     title: 'Modern Living Room Makeover',
     description: 'Replaced outdated window drapes with custom luxury navy silk curtains, instantly elevating the room’s visual weight.',
-    beforeImage: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80'
+    beforeImage: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/gallery/1792836754253_Sunlit_Luxury_Lounge_Before_Window_Treatments__1_.png',
+    afterImage: 'https://vgcftgxtpywmswxvztsm.supabase.co/storage/v1/object/public/images/gallery/1792836759470_Golden-Hour_Zebra_Blind_Living_Room.png'
   },
   {
     id: 'p2',
     category: 'Bedroom',
     title: 'Exquisite Master Bedroom',
     description: 'Upgraded plain walls with custom-textured wallpaper and layered blackout curtains to maximize luxury and sleep comfort.',
-    beforeImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=600&q=80'
+    beforeImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/gallery/1792161028154_Sunlit_Curtains_in_a_Modern_Living_Room.png',
+    afterImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/gallery/1792161037235_Sunlit_Modern_Living_Room_Retreat.png'
   },
   {
     id: 'p3',
     category: 'Dining Room',
     title: 'Grand Dining Room Styling',
     description: 'Integrated premium biophilic drapes paired with bespoke blinds to harness natural light control beautifully.',
-    beforeImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1617806118233-18e1db207faf?auto=format&fit=crop&w=600&q=80'
-  },
-  {
-    id: 'p4',
-    category: 'Kids Room',
-    title: 'Sunlit Villa Lounge',
-    description: 'Transformed harsh direct sunlight into a soft ambient glow using custom sheer linen drapes with motorized tracking.',
-    beforeImage: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=600&q=80'
-  },
-  {
-    id: 'p5',
-    category: 'Living Room',
-    title: 'Bespoke Royal Penthouse',
-    description: 'Elevated a high-ceiling living space with floor-to-ceiling pleated velvet curtains and gold accent wall coverings.',
-    beforeImage: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80'
-  },
-  {
-    id: 'p6',
-    category: 'Bedroom',
-    title: 'Executive Office Suite',
-    description: 'Replaced basic industrial blinds with rich acoustic textured drapes for refined corporate elegance and sound damping.',
-    beforeImage: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=600&q=80'
+    beforeImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/gallery/1792171198429_ChatGPT_Image_Sep_19__2026__07_51_09_PM.png',
+    afterImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/gallery/1792171218164_Cozy_Sage_Botanical_Reading_Nook.png'
   }
 ];
 
@@ -357,7 +333,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   heroSub1: 'Your Vision. Our Craftsmanship.',
   heroSub2: 'Perfectly Delivered.',
   heroDesc: 'We help homeowners and businesses elevate their interiors with premium curtains, wallpapers, and blinds that perfectly blend style, comfort, and functionality. Come with a vision. Leave with complete satisfaction.',
-  heroImageUrl: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
+  heroImageUrl: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/hero/1792157865648_Sunlit_Modern_Living_Room_Retreat.png',
   aboutTitle: 'YOUR COMPANION IN ARTFUL FITTINGS',
   aboutText1: 'At Floating Drapes, we believe every space tells a story. With over 12 years of expertise in interior furnishing solutions, we help our clients create elegant and personalized spaces through carefully selected curtains, wallpapers, and blinds.',
   aboutText2: 'Our team of experienced design consultants and skilled installation artisans work in perfect harmony to deliver a seamless, stress-free transformation. From residential estates to commercial showrooms, we bring absolute precision and premium design.',
@@ -374,39 +350,39 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
       badge: '1000+',
       description: 'Premium quality fabrics in a wide range of colors, textures & patterns.',
       buttonText: 'Explore Curtains',
-      thumbnail: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80',
+      thumbnail: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/curtains/1792150802131_Sunlit_Curtains_in_a_Modern_Living_Room.png',
     },
     wallpapers: {
       title: 'Wallpapers',
       badge: '1500+',
       description: 'From modern textures to timeless patterns, find the perfect match.',
       buttonText: 'Explore Wallpapers',
-      thumbnail: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=600&q=80',
+      thumbnail: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/wallpapers/1792150812602_Cozy_Sage_Botanical_Reading_Nook.png',
     },
     blinds: {
       title: 'Blinds',
       badge: '600+',
       description: 'Stylish & functional blinds for light control and privacy.',
       buttonText: 'Explore Blinds',
-      thumbnail: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+      thumbnail: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/blinds/1792150820025_file_0000000081948211a11d407661c13caa.png',
     },
   },
   categoryImages: {
-    curtains: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80',
-    wallpapers: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=600&q=80',
-    blinds: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+    curtains: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/curtains/1792150802131_Sunlit_Curtains_in_a_Modern_Living_Room.png',
+    wallpapers: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/wallpapers/1792150812602_Cozy_Sage_Botanical_Reading_Nook.png',
+    blinds: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/blinds/1792150820025_file_0000000081948211a11d407661c13caa.png',
   },
 
   customizationSectionTitle: 'Tailor-Made Customization',
   customizationSectionSubtitle: 'BESPOKE STYLING',
   customizationCurtainsTitle: 'Design Your Own Curtains',
   customizationCurtainsDesc: 'Customize your curtains with your favorite fabric, color & style. Get precision fit.',
-  customizationCurtainsImage: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=600&q=80',
+  customizationCurtainsImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/curtains/1792151517592_Modern_Luxury_Living_Room_with_Draped_Curtains.png',
   customizationWallpaperTitle: 'Design Your Own Wallpaper',
   customizationWallpaperDesc: 'Create unique wallpaper designs that reflect your personality and style perfectly.',
-  customizationWallpaperImage: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=600&q=80',
+  customizationWallpaperImage: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/wallpapers/1792151416732_Luxurious_Botanical_Wallpaper_Living_Room.png',
 
-  whyChooseUsImageUrl: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=800&q=80',
+  whyChooseUsImageUrl: 'https://dailfrvzaqksxohurgrq.supabase.co/storage/v1/object/public/images/why_choose_us/1792151814330_Luxury_Drapery_Showroom_in_Sunlight.png',
   whyChooseUsSubtitle: 'WHY CHOOSE US',
   whyChooseUsTitle: 'Quality, Service & Satisfaction You Can Trust',
   whyChooseUsDesc: 'At Floating Drapes, we are dedicated to bringing your design dreams to fruition. With premium fabrics, exquisite craftsmanship, and our highly customized approach, we ensure that every client experiences absolute comfort and class.',

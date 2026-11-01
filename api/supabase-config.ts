@@ -3,13 +3,13 @@ export function getStoredSupabaseConfig() {
   const url = (
     process.env.VITE_SUPABASE_URL ||
     process.env.SUPABASE_URL ||
-    ""
+    "https://vgcftgxtpywmswxvztsm.supabase.co"
   ).trim();
 
   const key = (
     process.env.VITE_SUPABASE_ANON_KEY ||
     process.env.SUPABASE_ANON_KEY ||
-    ""
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnY2Z0Z3h0cHl3bXN3eHZ6dHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MTQxODAsImV4cCI6MjEwNTI5MDE4MH0.z0Ur4dFmbiDX9YY2rvnm7jqmgT6eU_7sd2Oqxxonq9k"
   ).trim();
 
   return {
