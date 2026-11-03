@@ -42,15 +42,15 @@ export default function Footer({ setActivePage, openBookingModal, brandLogoUrl =
             </div>
 
             <p className="font-sans text-[14px] font-light text-zinc-500 leading-[160%] max-w-sm">
-              Transforming spaces with premium curtains, wallpapers, and blinds that perfectly blend style, comfort, and functionality.
+              Transforming spaces with premium curtains, wallpapers, and blinds that perfectly blend style, comfort, and functionality across Bangalore.
             </p>
 
-            {/* Social Icons: WhatsApp & Instagram only, matching identical design style */}
+            {/* Social Icons: WhatsApp & Instagram only */}
             <div className="flex items-center space-x-3.5 pt-2">
               <button 
                 type="button"
                 onClick={() => {
-                  openWhatsAppPopup("Hi! I'm visiting Floating Drapes and would like to inquire about your luxury curtains, wallpapers, and blinds.");
+                  openWhatsAppPopup("Hi! I'm visiting Floating Drapes and would like to inquire about your luxury curtains, wallpapers, and blinds in Bangalore.");
                 }}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-[#EAEAEA] text-zinc-600 hover:text-[#25D366] hover:border-[#25D366] transition-all bg-white shadow-sm cursor-pointer"
                 aria-label="WhatsApp"
@@ -168,7 +168,7 @@ export default function Footer({ setActivePage, openBookingModal, brandLogoUrl =
               </li>
               <li className="leading-relaxed text-zinc-500">
                 <span className="font-bold text-[#021E3B]">Experience Center:</span><br />
-                Floating Drapes, 712, Niladhri Main Road, Begur Hobli, Chikkathoguru, Bengaluru, Karnataka 560100
+                Floating Drapes, 712, Neeladri Main Road, Begur Hobli, Chikkathoguru, Bengaluru, Karnataka 560100
               </li>
             </ul>
           </div>
